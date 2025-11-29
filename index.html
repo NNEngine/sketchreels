@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtInMotion | Your Photo, Turned into a Magical Hand-Drawn Art Video</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom Tailwind Configuration & Fonts */
+        :root {
+            /* Primary color is the requested rose/pink */
+            --color-primary: #d16b86;
+            /* Soft primary color for shadows and accents (rgb(209 107 134 / 50%)) */
+            --color-primary-soft: rgb(209 107 134 / 50%);
+            --color-secondary: #1f2937;
+            /* Dark Gray for text */
+            --color-background: #ffffff;
+            /* White Background */
+            --color-card: #ffffff;
+            /* White Cards */
+            /* Adjusted for an even bolder background color */
+            --color-bg-alt: #fbcfe8;
+            /* Using Tailwind's bg-rose-200 for stronger contrast */
+        }
+
+        .dm-serif {
+            font-family: 'DM Serif Display', serif;
+        }
+
+        .inter {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom Styles for Artistic Theme */
+        body {
+            background-color: var(--color-background);
+            color: var(--color-secondary);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Apply font to custom classes */
+        .artistic-heading {
+            font-family: 'DM Serif Display', serif;
+        }
+
+        /* Artistic Card/Frame effect */
+        .art-card {
+            background-color: var(--color-card);
+            border: 1px solid #e5e7eb;
+            /* Light gray border */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+        }
+
+        /* Primary Rose Button */
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #be5670;
+            /* Slightly darker rose for hover */
+            box-shadow: 0 4px 15px var(--color-primary-soft);
+        }
+
+        /* Outline Button */
+        .btn-outline {
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
+            font-weight: 600;
+            background: transparent;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--color-bg-alt);
+            /* Use the bolder alt background for hover */
+        }
+
+        /* Image Placeholder Styling */
+        .placeholder-frame {
+            background-color: #f9fafb;
+            border: 1px dashed #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1 / 1;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Custom Text Color Utility */
+        .text-rose-custom {
+            color: var(--color-primary);
+        }
+
+        /* --- Animations (for responsiveness and dynamism) --- */
+        @keyframes icon-float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .animate-float {
+            animation: icon-float 3s ease-in-out infinite;
+        }
+
+        @keyframes text-glow-pulse {
+
+            0%,
+            100% {
+                text-shadow: 0 0 5px rgba(209, 107, 134, 0.2);
+            }
+
+            50% {
+                text-shadow: 0 0 15px rgba(209, 107, 134, 0.6);
+            }
+        }
+
+        .animate-text-pulse {
+            animation: text-glow-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes whatsapp-pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            }
+
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
+        }
+
+        .animate-whatsapp-pulse {
+            animation: whatsapp-pulse 2s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+    </style>
+    <!-- Injecting Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400&family=Inter:wght@100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="antialiased">
+
+    <!-- Limited Time Offer Banner -->
+    <div
+        class="bg-rose-100 text-center py-2 text-sm font-medium text-rose-900 sticky top-0 z-50 inter border-b border-rose-200">
+        <p><i data-lucide="clock" class="w-4 h-4 inline mr-2 align-text-bottom text-rose-600"></i>Limited Slots Today:
+            Order early and get your video within 1 day.<span class="hidden sm:inline-block font-bold">Order Now
+                ➡️</span></p>
+    </div>
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-[33px] z-50 py-4 border-b border-gray-100 bg-white/90 backdrop-blur-sm shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <h1 class="text-2xl artistic-heading text-rose-custom font-bold">SketchReels</h1>
+            <nav class="hidden md:flex space-x-6 inter text-sm font-medium text-gray-600">
+                <a href="#portfolio" class="hover:text-rose-custom transition">Gallery</a>
+                <a href="#about" class="hover:text-rose-custom transition">About Us</a>
+                <a href="#testimonials" class="hover:text-rose-custom transition">Reviews</a>
+                <a href="#uses" class="hover:text-rose-custom transition">Video Ideas</a>
+                <a href="#faq" class="hover:text-rose-custom transition">FAQ</a>
+            </nav>
+            <a href="#order-call"
+                class="btn-primary px-4 py-2 rounded-lg text-sm hidden sm:block shadow-lg shadow-rose-200">
+                Order Now
+            </a>
+            <div class="md:hidden">
+                <i data-lucide="menu" class="w-6 h-6 text-gray-700 cursor-pointer"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Hero Section (Colored - Full Width) -->
+        <section id="hero" class="py-20 md:py-32 text-center bg-rose-200">
+            <div class="max-w-4xl mx-auto px-4">
+                <h2 class="text-4xl sm:text-6xl md:text-7xl font-bold artistic-heading leading-tight mb-6">
+                    <span class="text-white">Your Photo, Transformed into a</span>
+                    <span class="font-semibold text-rose-custom animate-text-pulse">
+                        Magical Hand-Drawn Video
+                    </span>
+                </h2>
+
+                <p class="text-lg md:text-xl text-gray-500 mb-10 inter max-w-2xl mx-auto leading-relaxed">
+                    Stop scrolling. Start sharing. Get a unique, personalized hand-drawn art video of your favorite
+                    picture. Perfect for gifts, profiles, and special moments.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="https://wa.me/919876555555?text=Hello%21%20I%20want%20to%20order%20a%20hand-drawn%20video.%20I%27ll%20send%20my%20photo%20now."
+                        target="_blank"
+                        class="btn-primary px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 artistic-heading text-lg">
+                        Order My Video Now
+                    </a>
+                    <a href="#portfolio" class="btn-outline px-8 py-3 rounded-xl transition duration-300 text-lg">
+                        View Samples
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. How It Works (White) -->
+        <section id="how-it-works" class="py-16 md:py-24 max-w-6xl mx-auto px-4 bg-white">
+            <h3 class="text-3xl md:text-4xl text-center artistic-heading mb-12 text-gray-800">How It Works: 3 Simple
+                Steps</h3>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div
+                    class="text-center art-card p-8 rounded-2xl transform hover:scale-[1.02] transition duration-300 bg-white">
+                    <div class="bg-rose-50 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6">
+                        <i data-lucide="message-circle-code" class="w-10 h-10 text-rose-custom animate-float"></i>
+                    </div>
+                    <p class="text-xl font-bold mb-3 inter text-gray-800">1. Send Photo</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">Contact us on WhatsApp, send your photo, and choose
+                        your plan (Basic, Standard, or Premium).</p>
+                </div>
+                <!-- Step 2 -->
+                <div
+                    class="text-center art-card p-8 rounded-2xl transform hover:scale-[1.02] transition duration-300 bg-white">
+                    <div class="bg-rose-50 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6">
+                        <i data-lucide="palette" class="w-10 h-10 text-rose-custom animate-float"
+                            style="animation-delay: 0.5s;"></i>
+                    </div>
+                    <p class="text-xl font-bold mb-3 inter text-gray-800">2. We Create Magic</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">Our artist manually sketches and produces your
+                        custom video with care and attention to detail.</p>
+                </div>
+                <!-- Step 3 -->
+                <div
+                    class="text-center art-card p-8 rounded-2xl transform hover:scale-[1.02] transition duration-300 bg-white">
+                    <div class="bg-rose-50 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6">
+                        <i data-lucide="send" class="w-10 h-10 text-rose-custom animate-float"
+                            style="animation-delay: 1s;"></i>
+                    </div>
+                    <p class="text-xl font-bold mb-3 inter text-gray-800">3. Receive Video</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">Get the final, high-resolution video delivered
+                        directly to you via WhatsApp in 1 day.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Portfolio / Sample Videos (Colored - Full Width) -->
+        <section id="portfolio" class="py-16 md:py-24 bg-rose-200">
+            <div class="max-w-7xl mx-auto px-4">
+                <h3 class="text-3xl md:text-4xl text-center artistic-heading mb-4 text-gray-900">Featured Art: Before &
+                    After
+                </h3>
+                <p class="text-center text-gray-500 mb-12 max-w-2xl mx-auto">See the transformation from a simple photo
+                    to a
+                    mesmerizing hand-drawn video.</p>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Sample 1 -->
+                    <div
+                        class="art-card rounded-xl p-2 cursor-pointer hover:shadow-xl hover:shadow-rose-100 transition group bg-white overflow-hidden">
+                        <!-- Video 1 (Placeholder URL - REPLACE 'src' WITH YOUR VIDEO URL) -->
+                        <video class="w-full h-full object-cover rounded-lg" autoplay loop muted playsinline
+                            poster="https://placehold.co/600x600/f9fafb/d1d5db?text=Video+Loading+1"
+                            style="aspect-ratio: 1 / 1;">
+                            <source src="samplev1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <!-- Sample 2 -->
+                    <div
+                        class="art-card rounded-xl p-2 cursor-pointer hover:shadow-xl hover:shadow-rose-100 transition group bg-white overflow-hidden">
+                        <!-- Video 2 (Placeholder URL - REPLACE 'src' WITH YOUR VIDEO URL) -->
+                        <video class="w-full h-full object-cover rounded-lg" autoplay loop muted playsinline
+                            poster="https://placehold.co/600x600/f9fafb/d1d5db?text=Video+Loading+2"
+                            style="aspect-ratio: 1 / 1;">
+                            <source src="samplev2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <!-- Sample 3 -->
+                    <div
+                        class="art-card rounded-xl p-2 cursor-pointer hover:shadow-xl hover:shadow-rose-100 transition group bg-white overflow-hidden">
+                        <!-- Video 3 (Placeholder URL - REPLACE 'src' WITH YOUR VIDEO URL) -->
+                        <video class="w-full h-full object-cover rounded-lg" autoplay loop muted playsinline
+                            poster="https://placehold.co/600x600/f9fafb/d1d5db?text=Video+Loading+3"
+                            style="aspect-ratio: 1 / 1;">
+                            <source src="samplev3.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <!-- Sample 4 -->
+                    <div
+                        class="art-card rounded-xl p-2 cursor-pointer hover:shadow-xl hover:shadow-rose-100 transition group bg-white overflow-hidden">
+                        <!-- Video 4 (Placeholder URL - REPLACE 'src' WITH YOUR VIDEO URL) -->
+                        <video class="w-full h-full object-cover rounded-lg" autoplay loop muted playsinline
+                            poster="https://placehold.co/600x600/f9fafb/d1d5db?text=Video+Loading+4"
+                            style="aspect-ratio: 1 / 1;">
+                            <source src="samplev4.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. About Section (White) -->
+        <section id="about" class="py-16 md:py-24 max-w-5xl mx-auto px-4 bg-white">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+
+                <!-- Image Block -->
+                <div
+                    class="art-card p-0 rounded-2xl overflow-hidden h-full min-h-[350px] bg-white transform rotate-2 hover:rotate-0 transition duration-500 border-4 border-[rgb(240,120,130)]">
+
+                    <img src="logo.png" alt="Artist Photo" class="w-full h-full object-cover" />
+                </div>
+
+
+                <!-- Text Section -->
+                <div>
+                    <span class="text-sm font-bold text-rose-custom uppercase tracking-wider mb-2 block">Our
+                        Story</span>
+
+                    <h3 class="text-3xl md:text-4xl artistic-heading mb-6 text-gray-900">
+                        Crafting Emotion, One Stroke at a Time.
+                    </h3>
+
+                    <p class="text-gray-600 inter mb-6 leading-relaxed text-lg">
+                        I’m SketchReels AI — a creative system designed to transform your memories into expressive
+                        hand-drawn videos.
+                        This journey began with a simple realization: a sketch can capture emotions that a photograph
+                        alone often cannot.
+                    </p>
+
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Every piece you order is generated with intention, care, and artistic sensitivity.
+                        This website is built to give you the easiest and most magical way to turn your cherished
+                        moments into moving works of art.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- 5. WhatsApp Ordering Call to Action (Colored - Full Width) -->
+        <section id="order-call" class="py-16 md:py-24 bg-rose-200">
+            <div class="max-w-3xl mx-auto px-4">
+                <div
+                    class="art-card p-10 md:p-14 rounded-3xl text-center border border-rose-200 bg-white shadow-2xl shadow-rose-100/50">
+                    <h3 class="text-3xl md:text-4xl artistic-heading mb-6 text-gray-900">Ready to Transform Your Photo?
+                    </h3>
+                    <p class="text-gray-600 mb-8 max-w-xl mx-auto text-lg">
+                        Ordering is now simple and personal. Just send us your image directly on WhatsApp, and we'll
+                        handle the rest!
+                    </p>
+
+                    <a href="https://wa.me/919876555555?text=Hello%21%20I%20want%20to%20order%20a%20hand-drawn%20video.%20I%27ll%20send%20my%20photo%20now."
+                        target="_blank"
+                        class="btn-primary px-10 py-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300 artistic-heading text-xl w-full sm:w-auto inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white">
+                        <i data-lucide="whatsapp" class="w-6 h-6 mr-2"></i>
+                        Start Order on WhatsApp
+                    </a>
+                    <p class="text-xs text-gray-400 mt-4">Clicking will open WhatsApp chat directly.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Social Media & Use Case Section (White) -->
+        <section id="uses" class="py-16 md:py-24 max-w-7xl mx-auto px-4 bg-white">
+            <h3 class="text-3xl md:text-4xl text-center artistic-heading mb-12 text-gray-900">How Will You Use Your
+                SketchReel?</h3>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+
+                <!-- Use Case 1 -->
+                <div
+                    class="text-center art-card p-8 rounded-2xl transform hover:scale-[1.02] transition duration-300 bg-white">
+                    <i data-lucide="zap" class="w-12 h-12 mx-auto mb-6 text-rose-custom animate-float"></i>
+                    <p class="text-xl font-bold mb-2 inter text-gray-800">Go Viral on Reels</p>
+                    <p class="text-gray-500 text-sm">The drawing process is inherently engaging. Post the video on
+                        Instagram or TikTok and watch the engagement soar!</p>
+                </div>
+
+                <!-- Use Case 2 -->
+                <div
+                    class="text-center art-card p-8 rounded-2xl transform hover:scale-[1.02] transition duration-300 border-2 border-rose-200 bg-rose-50/30 relative">
+                    <div
+                        class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-rose-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                        POPULAR</div>
+                    <i data-lucide="gift" class="w-12 h-12 mx-auto mb-6 text-rose-custom animate-float"
+                        style="animation-delay: 0.5s;"></i>
+                    <p class="text-xl font-bold mb-2 inter text-gray-800">The Perfect Gift</p>
+                    <p class="text-gray-500 text-sm">Surprise your loved ones with a truly unique, emotional, and
+                        personalized digital gift they can cherish forever.</p>
+                </div>
+
+                <!-- Use Case 3 -->
+                <div
+                    class="text-center art-card p-8 rounded-2xl transform hover:scale-[1.02] transition duration-300 bg-white">
+                    <i data-lucide="smartphone" class="w-12 h-12 mx-auto mb-6 text-rose-custom animate-float"
+                        style="animation-delay: 1s;"></i>
+                    <p class="text-xl font-bold mb-2 inter text-gray-800">WhatsApp Status</p>
+                    <p class="text-gray-500 text-sm">Ditch the boring updates. Use your SketchReel as a high-quality,
+                        eye-catching WhatsApp Status or Profile Video.</p>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 7. Testimonials (Colored - Full Width) -->
+        <section id="testimonials" class="py-16 md:py-24 bg-rose-200">
+            <div class="max-w-7xl mx-auto px-4">
+                <h3 class="text-3xl md:text-4xl text-center artistic-heading mb-4 text-gray-900">Loved by Our Customers
+                </h3>
+                <div class="flex justify-center items-center mb-12 space-x-2">
+                    <div class="flex text-yellow-400">
+                        <i data-lucide="star" class="w-5 h-5 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-yellow-400"></i>
+                    </div>
+                    <span class="text-gray-500 font-medium">(5.0/5.0 Rating)</span>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="art-card p-8 rounded-xl bg-white border-none shadow-lg">
+                        <p class="text-gray-600 italic mb-6 leading-relaxed">"The video was absolutely perfect for my
+                            husband's birthday gift! The detail was incredible, and the delivery was so fast via
+                            WhatsApp."</p>
+                        <div class="flex items-center">
+                            <div
+                                class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-600 font-bold mr-3">
+                                P</div>
+                            <p class="font-bold text-sm text-gray-900">Priya K.</p>
+                        </div>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="art-card p-8 rounded-xl bg-white border-none shadow-lg">
+                        <p class="text-gray-600 italic mb-6 leading-relaxed">"I used this on my WhatsApp status and
+                            everyone asked where I got it! Great quality and super responsive service. Worth every
+                            rupee."</p>
+                        <div class="flex items-center">
+                            <div
+                                class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-600 font-bold mr-3">
+                                R</div>
+                            <p class="font-bold text-sm text-gray-900">Rahul S.</p>
+                        </div>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div class="art-card p-8 rounded-xl bg-white border-none shadow-lg">
+                        <p class="text-gray-600 italic mb-6 leading-relaxed">"The artist captured the emotion of my
+                            wedding photo perfectly. It was delivered quickly and looked amazing on my Instagram reel."
+                        </p>
+                        <div class="flex items-center">
+                            <div
+                                class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-600 font-bold mr-3">
+                                M</div>
+                            <p class="font-bold text-sm text-gray-900">Meera B.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 8. FAQ Section (White) -->
+        <section id="faq" class="py-16 md:py-24 max-w-4xl mx-auto px-4 bg-white">
+            <h3 class="text-3xl md:text-4xl text-center artistic-heading mb-12 text-gray-900">Frequently Asked Questions
+            </h3>
+            <div class="space-y-4">
+                <div class="art-card p-6 rounded-xl bg-white">
+                    <strong class="block mb-2 text-rose-custom">Q: What photo should I send for the best
+                        results?</strong>
+                    <p class="text-sm text-gray-600">A: Photos with clear lighting and focused subjects work best! Avoid
+                        heavily filtered or blurry images.</p>
+                </div>
+                <div class="art-card p-6 rounded-xl bg-white">
+                    <strong class="block mb-2 text-rose-custom">Q: How long does the delivery take?</strong>
+                    <p class="text-sm text-gray-600">A: Delivery typically takes 1day. We confirm the time when
+                        you place your order.</p>
+                </div>
+                <div class="art-card p-6 rounded-xl bg-white">
+                    <strong class="block mb-2 text-rose-custom">Q: How do I know the price?</strong>
+                    <p class="text-sm text-gray-600">A: We offer Basic, Standard, and Premium options. Send your image
+                        on WhatsApp, and we'll give you the exact pricing instantly!</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <!-- <footer class="py-12 border-t border-gray-200 inter text-sm text-gray-500 bg-gray-50"> -->
+    <footer class="py-12 inter text-sm text-gray-700 bg-[rgb(254,205,211)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="text-lg font-bold artistic-heading text-gray-900 mb-4">SketchReels</h4>
+                <p>Your photo, turned into art.</p>
+                <p class="mt-2 text-xs text-gray-400">Trusted by 200+ customers.</p>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold artistic-heading text-gray-900 mb-4">Explore</h4>
+                <ul class="space-y-2">
+                    <li><a href="#portfolio" class="hover:text-rose-custom transition">Gallery</a></li>
+                    <li><a href="#about" class="hover:text-rose-custom transition">About the Artist</a></li>
+                    <li><a href="#testimonials" class="hover:text-rose-custom transition">Reviews</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold artistic-heading text-gray-900 mb-4">Support</h4>
+                <ul class="space-y-2">
+                    <li><a href="#faq" class="hover:text-rose-custom transition">FAQ</a></li>
+                    <li><a href="#" class="hover:text-rose-custom transition">Terms</a></li>
+                    <li><a href="#" class="hover:text-rose-custom transition">Privacy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold artistic-heading text-gray-900 mb-4">Contact</h4>
+                <p>WhatsApp: <a href="https://wa.me/919340761356" target="_blank"
+                        class="hover:text-rose-custom transition font-medium">+91 93407 61356</a></p>
+                <p>Email: <a href="mailto:shivamsharma120120@gmail.com"
+                        class="hover:text-rose-custom transition">shivamsharma120120@gmail.com</a></p>
+                <div class="mt-4 flex space-x-3">
+                    <i data-lucide="instagram"
+                        class="w-5 h-5 text-gray-400 hover:text-rose-custom cursor-pointer transition"></i>
+                    <i data-lucide="youtube"
+                        class="w-5 h-5 text-gray-400 hover:text-rose-custom cursor-pointer transition"></i>
+                    <i data-lucide="mail"
+                        class="w-5 h-5 text-gray-400 hover:text-rose-custom cursor-pointer transition"></i>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-12 text-xs text-gray-400">
+            &copy; 2025 SketchReels. All rights reserved. Handmade with care.
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919340761356?text=Hello!%20I%20want%20to%20order%20a%20custom%20hand-drawn%20art%20video."
+        target="_blank"
+        class="fixed bottom-6 right-6 w-16 h-16 rounded-full flex items-center justify-center shadow-2xl bg-green-500 hover:bg-green-600 transition duration-300 z-50 group animate-whatsapp-pulse">
+        <i data-lucide="message-square" class="w-8 h-8 text-white transition group-hover:scale-110"></i>
+    </a>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+
+</body>
+
+</html>
